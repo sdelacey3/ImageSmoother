@@ -1,0 +1,32 @@
+import image
+
+
+oldimg = image.Image("noisyman.png")
+img = image.EmptyImage(oldimg.getWidth(),oldimg.getHeight())
+win = image.ImageWin(img.getWidth(), img.getHeight())
+img.draw(win)
+img.setDelay(1,150)   
+
+for row in range(1,img.getHeight()-1):
+    for col in range(1,img.getWidth()-1):
+        
+        p1 = oldimg.getPixel(col-1, row-1)
+        p2 = oldimg.getPixel(col-1, row)
+        p3 = oldimg.getPixel(col, row-1)
+        p4 = oldimg.getPixel(col+1, row-1)
+        p5 = oldimg.getPixel(col-1, row+1)
+        p6 = oldimg.getPixel(col, row+1)
+        p7 = oldimg.getPixel(col+1, row)
+        p8 = oldimg.getPixel(col+1, row+1)
+        red = (p1.getRed() + p2.getRed()+p3.getRed()+p4.getRed()+p5.getRed()+p6.getRed()+p7.getRed()+p8.getRed())/8
+        green = (p1.getGreen()+p2.getGreen()+p3.getGreen()+p4.getGreen()+p5.getGreen()+p6.getGreen()+p7.getGreen()+p8.getGreen())/8
+        blue = (p1.getBlue()+p2.getBlue()+p3.getBlue()+p4.getBlue()+p5.getBlue()+p6.getBlue()+p7.getBlue()+p8.getBlue())/8
+        newpixel = image.Pixel(red, green, blue)
+        img.setPixel(col,row,newpixel)
+for row in range(img.getHeight()):
+    for col in range(img.getWidth()):   
+        if(row ==0 or col == 0 or row == img.getHeight()-1 or col == img.getWidth()-1):
+            p = oldimg.getPixel(col,row)
+            img.setPixel(col,row,p)
+img.draw(win)
+win.exitonclick()
